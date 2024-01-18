@@ -112,12 +112,12 @@
 	</section>
 	<section id="login-section">
 		<h2>Log in</h2>
-
-		<form action="login-form" method="post">
+		<!-- Action mis en valeur "vide" sinon le navigateur envoyait vers une page avec la valeur "login-form" en fin de path -->
+		<form action="" method="post" id="login-form">
 			<label for="emailLogin">Email</label>
-			<input type="email" name="emailLogin" id="emailLogin">
+			<input type="email" name="emailInput" id="emailInput">
 			<label for="password">Mot de passe</label>
-			<input type="password" name="password">
+			<input type="password" name="passwordInput" id="passwordInput">
 			<input type="submit" value="Se connecter">
 			<span class="forgotten">Mot de passe oublié</span>		
 		</form>

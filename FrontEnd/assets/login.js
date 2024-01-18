@@ -4,21 +4,28 @@ async function userLogin(){
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-    },
+    }, //J'oublie toujours la virgule ici!
     body: JSON.stringify({
-    email: "sophie.bluel@test.tld",
-    password: "S0phie"
+        email: "sophie.bluel@test.tld",
+        password: "S0phie",
     })
     })
 
     if (responseLogin.ok) {
     const dataLogin = await responseLogin.json()
     console.log(dataLogin)
-    } else {
-    console.log("Login failed:")
+    const connectedToken = dataLogin.token
+        if(connectedToken){
+        //Stocke le token dans le localstorage
+        window.localStorage.setItem("token", connectedToken);
+            }else {
+        console.log("Token not received. Login failed.");
+        }
+    }else{
+        console.log("incorrect")
     }
-   
 }
+
 
 userLogin()
 
@@ -36,12 +43,27 @@ loginLink.addEventListener("click", ()=>{
     introElement.innerHTML=""
     portfolioElement.innerHTML=""
     contactElement.innerHTML=""
-
+    //Permet à la login-section d'apparaître en utilisant les classes et CSS (position absolute to relative, transform scale 0 to 1)
     loginSection.classList.add('active');
-
+    // Récupération du formulaire de la login-section et ajout d'un eventlistener
+    // sur l'input submit (bouton 'envoyer')
+    let loginForm = document.getElementById('login-form')
+    loginForm.addEventListener('submit', function (event) {
+    event.preventDefault()
+    let emailInput = document.getElementById("emailInput")
+    let passwordInput = document.getElementById("passwordInput")
+    console.log("Email:", emailInput.value);
+    console.log("Password:", passwordInput.value);
     
+    userLogin()
+});
+})
 
-    
-
-
+let emailInput = document.getElementById('emailInput')
+emailInput.addEventListener("input", function () {
+    console.log('Email Input Value:', emailInput.value)
+})
+let passwordInput = document.getElementById("passwordInput")
+passwordInput.addEventListener("input", function(){
+    console.log('Password Input Value:', passwordInput.value)
 })
