@@ -1,63 +1,80 @@
+import "./login.js";
+
 async function fetchData() {
     // Récupération des données GET /works
-    const response = await fetch("http://localhost:5678/api/works")
-    const data = await response.json()
-    console.log(data)
-    // Récupération des données GET /categories
-    const responseCategories = await fetch("http://localhost:5678/api/categories")
-    const dataCategories = await responseCategories.json()
-    console.log(dataCategories)
+    const response = await fetch("http://localhost:5678/api/works");
+    const data = await response.json();
+    //console.log(data);
 
-    function generateData() {
+    //Génération des données sur la page web
+    function generateData(data) {
+        //Selection du container gallery
+        const gallery = document.querySelector(".gallery");
+        //Empêche les doublons lorsque l'on clique sur un filtre
+        gallery.innerHTML = ""; 
+    
         for (let i = 0; i < data.length; i++) {
             const designProjects = data[i];
-            // Récupération de l'élément du DOM qui accueillera les cards
-            const gallery = document.querySelector(".gallery");
-            
-            // Création d’une card qui comprendra l'image(imageUrl) et le nom(title)
-            const galleryCard = document.createElement("article")
-            gallery.appendChild(galleryCard)
     
-            // Ajout des données issues de l'API à l'intérieur des cards (<article>) 
-            
-            // Ajout des images
+            // Création d’un élément <article> qui comprendra l'image(imageUrl) et le nom(title)
+            const galleryCard = document.createElement("article");
+            gallery.appendChild(galleryCard);
+    
+            // Ajout des images dans <article>
             const imageFromDesignProjects = document.createElement("img");
             imageFromDesignProjects.src = designProjects.imageUrl;
-            galleryCard.appendChild(imageFromDesignProjects)
-            
-            //Ajout des titres
+            galleryCard.appendChild(imageFromDesignProjects);
+    
+            // Ajout des titres dans <article>
             const titleFromDesignProjects = document.createElement("h3");
             titleFromDesignProjects.innerText = designProjects.title;
-            galleryCard.appendChild(titleFromDesignProjects)  
+            galleryCard.appendChild(titleFromDesignProjects);
         }
     }
     
-    generateData()
-    
-}
+    generateData(data);
 
-fetchData()
+    //Sélection du bouton Objets et ajout d'un addEventListener
+    const btnObjets = document.querySelector(".objects");
+    btnObjets.addEventListener("click", function () {
+        //console.log("clicked");
+        // Si designProjects.category existe dans l'API, vérifier si la propiété name === "Objets". 
+        const filteredObjects = data.filter(function (designProjects) {
+            return designProjects.category && designProjects.category.name === "Objets";
+        });
 
-async function userLogin(){
-    const responseLogin = await fetch("http://localhost:5678/api/users/login", {
-    method: 'POST', 
-    headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-    email: "sophie.bluel@test.tld",
-    password: "S0phie"
-    })
-    })
+        generateData(filteredObjects);
+    });
 
-    if (responseLogin.ok) {
-    const dataLogin = await responseLogin.json()
-    console.log(dataLogin)
-    } else {
-    console.log("Login failed:")
-    }
-}
+     //Sélection du bouton Appartements et ajout d'un addEventListener
+     const btnAppartements = document.querySelector(".flats");
+     btnAppartements.addEventListener("click", function () {
+         //console.log("clicked");
+         // Si designProjects.category existe dans l'API, vérifier si la propiété name === "Appartements". 
+         const filteredObjects = data.filter(function (designProjects) {
+             return designProjects.category && designProjects.category.name === "Appartements";
+         });
+ 
+         generateData(filteredObjects);
+     });   
 
-userLogin()
+      //Sélection du bouton Hotels & Restaurants et ajout d'un addEventListener
+      const btnHotels = document.querySelector(".hotels");
+      btnHotels.addEventListener("click", function () {
+          //console.log("clicked");
+          // Si designProjects.category existe dans l'API, vérifier si la propiété name === "Hotels & restaurants". 
+          const filteredObjects = data.filter(function (designProjects) {
+              return designProjects.category && designProjects.category.name === "Hotels & restaurants";
+          });
   
+          generateData(filteredObjects);
+      }); 
+      
+      //Sélection du bouton Tous et ajout d'un addEventListener
+      const btnAll = document.querySelector(".all");
+      btnAll.addEventListener("click", function () {
+          //console.log("clicked");
+          generateData(data);
+          }); 
+}
+fetchData();
