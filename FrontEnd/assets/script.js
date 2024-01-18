@@ -78,3 +78,9 @@ async function fetchData() {
           }); 
 }
 fetchData();
+
+const loginLink = document.getElementById("link-login")
+loginLink.addEventListener("click", ()=>{
+    //console.log("clicked on login link")
+    
+})

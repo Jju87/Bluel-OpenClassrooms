@@ -17,7 +17,31 @@ async function userLogin(){
     } else {
     console.log("Login failed:")
     }
+   
 }
 
 userLogin()
-  
+
+//Récupration de la section login au sein d'une variable globale 
+const loginSection = document.getElementById("login-section")
+
+const loginLink = document.getElementById("link-login")
+loginLink.addEventListener("click", ()=>{
+    console.log("clicked on login link")
+    //Récupération des éléments à effacer au clic
+    const introElement = document.getElementById("introduction")
+    const portfolioElement = document.getElementById("portfolio")
+    const contactElement = document.getElementById("contact")
+    //Suppression des éléments au clic
+    introElement.innerHTML=""
+    portfolioElement.innerHTML=""
+    contactElement.innerHTML=""
+
+    loginSection.style.transform = "scale(1)"
+
+    
+
+    
+
+
+})
