@@ -37,7 +37,7 @@ loginLink.addEventListener("click", ()=>{
     portfolioElement.innerHTML=""
     contactElement.innerHTML=""
 
-    loginSection.style.transform = "scale(1)"
+    loginSection.classList.add('active');
 
     
 

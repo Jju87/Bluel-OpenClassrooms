@@ -188,7 +188,8 @@ nav li {
 	width: 100%;
 
 }
-#contact, #login-section{
+
+#contact{
 	width: 50%;
 	margin: auto;
 }
@@ -237,10 +238,21 @@ input[type="submit"]{
 }
 
 #login-section{
-	margin-bottom: 350px;
 	transform: scale(0);
-	transition: 200ms ease-out;
+	visibility: hidden;
+	transition: 300ms ease-out;
+	width:50%;
+	margin:auto;
+	margin-bottom: 300px;
+	position: absolute;
 }
+
+#login-section.active {
+	visibility: visible;
+	transform: scale(1);
+	transition: 300ms ease-out;
+	position: relative;
+  }
 
 footer nav ul {
 	display: flex;
