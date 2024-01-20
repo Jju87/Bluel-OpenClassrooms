@@ -3,15 +3,26 @@
 //Récupération de la section login  
 const loginSection = document.getElementById("login-section")
 
-//Récupération du lien login et création d'un addEventlistener
-const loginLink = document.getElementById("link-login")
-loginLink.addEventListener("click", ()=>{
-    //console.log("clicked on login link")
+//Récupération des éléments à effacer au clic de lien 'login'
+const introElement = document.getElementById("introduction")
+const portfolioElement = document.getElementById("portfolio")
+const contactElement = document.getElementById("contact")
 
-    //Récupération des éléments à effacer au clic de lien 'login'
-    const introElement = document.getElementById("introduction")
-    const portfolioElement = document.getElementById("portfolio")
-    const contactElement = document.getElementById("contact")
+// Créattion d'une fonction de regénéraion des élements de la page d'acceuil
+// quand la secion login est affichée à l'écran
+function generateHomePage()
+{
+    introElement.style.display = "block"
+    introElement.style.display = "flex"
+    portfolioElement.style.display = "block"
+    contactElement.style.display = "block"
+    loginSection.classList.remove('active')
+}
+
+//Récupération du lien login et création d'un addEventlistener
+const loginBtn = document.getElementById("link-login")
+loginBtn.addEventListener("click", ()=>{
+    //console.log("clicked on login link")
 
     //Suppression des éléments au clic
     introElement.style.display = "none"
@@ -26,22 +37,50 @@ loginLink.addEventListener("click", ()=>{
     //(disparition de la section login et réapparition des sections Intro, Projets, Contacts)
     const linkContact = document.getElementById("link-contact")
     linkContact.addEventListener("click", ()=>{
-    introElement.style.display = "block"
-    portfolioElement.style.display = "block"
-    contactElement.style.display = "block"
-    loginSection.classList.remove('active')
+    generateHomePage()
     })
 
     //Fonctionnement optimal du lien Projets 
     //(disparition de la section login et réapparition des sections Intro, Projets, Contacts)
     const linkProjects = document.getElementById("link-projects")
     linkProjects.addEventListener("click", ()=>{
-    introElement.style.display = "block"
-    portfolioElement.style.display = "block"
-    contactElement.style.display = "block"
-    loginSection.classList.remove('active')
+    generateHomePage
     })
 })
+
+// Génération d'un bouton logout
+const logoutBtn = document.createElement("li")
+logoutBtn.innerText = "logout"
+const headerNavUl = document.querySelector(".header__nav--ul")
+loginBtn.insertAdjacentElement("afterend", logoutBtn)
+logoutBtn.style.display = "none"
+
+function handleEditionPage(){
+    //Regénération de la page d'acceuil avec la fonction generateHomePage
+    generateHomePage()
+
+    // Génération de la marge comprenant le bouton d'édition en haut de page
+                    
+    const editButton = document.createElement("div")
+    editButton.classList.add("edit-section")
+
+    const header = document.querySelector("header")
+    header.insertAdjacentElement("beforebegin", editButton)
+
+    editButton.innerHTML = `<div class="edit-btn"><i class="fa-solid fa-pen-to-square"></i> Mode édition</div>`
+
+    loginBtn.style.display = "none"
+    logoutBtn.style.display = "block"
+
+
+    // Génération du bouton modifier
+    const modifyButton = document.createElement("div")
+
+    const titleProjects = document.querySelector(".projects-title")
+    titleProjects.appendChild(modifyButton)
+
+    modifyButton.innerHTML = `<div class="modify-btn"><i class="fa-solid fa-pen-to-square"></i> Modifier</div>`
+    }
 
 
 //*** Addeventlistener du fromulaire (SUBMIT) ***//
@@ -79,8 +118,12 @@ loginForm.addEventListener('submit', function (event) {
             //Stocke le token dans le localstorage
             window.localStorage.setItem("token", connectedToken)
             console.log("token stocké dans le storage local")
-            window.location.href = "http://127.0.0.1:3000/FrontEnd/index.html"
-                }else {
+
+            handleEditionPage()
+
+
+                
+            }else {
             console.log("Token not received. Login failed.")
             }
         }else{
@@ -106,6 +149,14 @@ loginForm.addEventListener('submit', function (event) {
     userLogin()
 })
 
+// Vérifie la présence du token dans le local storage avec getitem
+document.addEventListener("DOMContentLoaded", () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+        // si token = true (présnce du token), la fonction handle login est implémenté
+        handleEditionPage();
+    }
+});
 
 
 
