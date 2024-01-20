@@ -1,9 +1,10 @@
-import "./login.js";
+import "./login.js"
+import "./edition.js"
 
 async function fetchData() {
     // Récupération des données GET /works
-    const response = await fetch("http://localhost:5678/api/works");
-    const data = await response.json();
+    const response = await fetch("http://localhost:5678/api/works")
+    const data = await response.json()
     //console.log(data);
 
     //Génération des données sur la page web
@@ -11,36 +12,36 @@ async function fetchData() {
         //Selection du container gallery
         const gallery = document.querySelector(".gallery");
         //Empêche les doublons lorsque l'on clique sur un filtre
-        gallery.innerHTML = ""; 
+        gallery.innerHTML = ""
     
         for (let i = 0; i < data.length; i++) {
-            const designProjects = data[i];
+            const designProjects = data[i]
     
             // Création d’un élément <article> qui comprendra l'image(imageUrl) et le nom(title)
-            const galleryCard = document.createElement("article");
-            gallery.appendChild(galleryCard);
+            const galleryCard = document.createElement("article")
+            gallery.appendChild(galleryCard)
     
             // Ajout des images dans <article>
-            const imageFromDesignProjects = document.createElement("img");
-            imageFromDesignProjects.src = designProjects.imageUrl;
-            galleryCard.appendChild(imageFromDesignProjects);
+            const imageFromDesignProjects = document.createElement("img")
+            imageFromDesignProjects.src = designProjects.imageUrl
+            galleryCard.appendChild(imageFromDesignProjects)
     
             // Ajout des titres dans <article>
-            const titleFromDesignProjects = document.createElement("h3");
-            titleFromDesignProjects.innerText = designProjects.title;
-            galleryCard.appendChild(titleFromDesignProjects);
+            const titleFromDesignProjects = document.createElement("h3")
+            titleFromDesignProjects.innerText = designProjects.title
+            galleryCard.appendChild(titleFromDesignProjects)
         }
     }
     
     generateData(data);
 
     //Sélection du bouton Objets et ajout d'un addEventListener
-    const btnObjets = document.querySelector(".objects");
+    const btnObjets = document.querySelector(".objects")
     btnObjets.addEventListener("click", function () {
         //console.log("clicked");
         // Si designProjects.category existe dans l'API, vérifier si la propiété name === "Objets". 
         const filteredObjects = data.filter(function (designProjects) {
-            return designProjects.category && designProjects.category.name === "Objets";
+            return designProjects.category && designProjects.category.name === "Objets"
         });
 
         generateData(filteredObjects);
@@ -82,5 +83,4 @@ fetchData();
 const loginLink = document.getElementById("link-login")
 loginLink.addEventListener("click", ()=>{
     //console.log("clicked on login link")
-    
 })

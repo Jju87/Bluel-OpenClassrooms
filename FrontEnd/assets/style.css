@@ -260,3 +260,39 @@ footer nav ul {
 	margin: 2em
 }
 
+.error-msg{
+	display: block;
+	color: red;
+}
+
+/*** connected user page ***/
+
+.edit-section{
+	background-color: black;
+	height: 60px;
+	width: 100vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-left: calc(-1 * ((100vw - 100%) / 2));
+	
+}
+
+.edit-btn{
+	color: white;
+	cursor: pointer;
+}
+.projects-title{
+	position: relative;
+	width: 500px;
+	margin: auto;
+}
+
+.modify-btn{
+	color: black;
+	position: absolute;
+	top: 10px;
+	left: 370px;
+	cursor: pointer;
+
+}
