@@ -45,11 +45,11 @@
 		<section class="filters">
 			<button class="filters__btn all">Tout
 			</button>
-			<button class="filters__btn objects">Objets
+			<button class="filters__btn objects" data-category="Objets">Objets
 			</button>
-			<button class="filters__btn flats">Appartements
+			<button class="filters__btn flats" data-category="Appartements">Appartements
 			</button>
-			<button class="filters__btn hotels">Hôtels & restaurants
+			<button class="filters__btn hotels" data-category="Hotels & restaurants">Hôtels & restaurants
 			</button>
 		</section>
 		<div class="gallery">
@@ -125,8 +125,23 @@
 			<input type="submit" value="Se connecter">
 			<span class="forgotten">Mot de passe oublié</span>		
 		</form>
-
 	</section>
+	<aside id="modal">
+		<div class="modal-wrapper">
+			<div class="xmark-container">
+				<i class="fa-solid fa-xmark"></i>
+			</div>
+			<section id="modal-gallery">
+				<h3 id="modal-title">Galerie photo</h3>
+				<div class="modal-gallery__eraser"></div>
+				<div class="btn-container">
+					<button class="access-to-add-images">Ajouter une photo</button>
+				</div>
+			</section>
+
+
+		</div>
+	</aside>
 </main>
 
 <footer>

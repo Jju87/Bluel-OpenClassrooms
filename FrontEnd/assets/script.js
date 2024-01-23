@@ -1,10 +1,10 @@
 import "./login.js"
 import "./edition.js"
 
-async function fetchData() {
-    // Récupération des données GET /works
-    const response = await fetch("http://localhost:5678/api/works")
-    const data = await response.json()
+
+// Récupération des données GET /works
+const response = await fetch("http://localhost:5678/api/works")
+const data = await response.json()
     //console.log(data);
 
     //Génération des données sur la page web
@@ -35,52 +35,68 @@ async function fetchData() {
     
     generateData(data);
 
-    //Sélection du bouton Objets et ajout d'un addEventListener
-    const btnObjets = document.querySelector(".objects")
-    btnObjets.addEventListener("click", function () {
-        //console.log("clicked");
-        // Si designProjects.category existe dans l'API, vérifier si la propiété name === "Objets". 
-        const filteredObjects = data.filter(function (designProjects) {
-            return designProjects.category && designProjects.category.name === "Objets"
-        });
+    //1.Création d'une fonction pour filtrer les éléments par catégorie, ici avec le paramètre categoryName
+    function filterDataByCateory(categoryName){
+        return data.filter(function (designProjects){
+            return designProjects.category && designProjects.category.name === categoryName
+        })
+    }
 
-        generateData(filteredObjects);
-    });
+    // Récupération de tous les boutons de filtres avec selectorALL
+    const filterButtons = document.querySelectorAll(".filters__btn")
 
-     //Sélection du bouton Appartements et ajout d'un addEventListener
-     const btnAppartements = document.querySelector(".flats");
-     btnAppartements.addEventListener("click", function () {
-         //console.log("clicked");
-         // Si designProjects.category existe dans l'API, vérifier si la propiété name === "Appartements". 
-         const filteredObjects = data.filter(function (designProjects) {
-             return designProjects.category && designProjects.category.name === "Appartements";
-         });
+    //Pour chaque bouton de filterButtons au click...
+    filterButtons.forEach( btn =>{
+        btn.addEventListener("click", ()=>{
+            // la variable categoryName récupère le data.category qui a été rajouté au html (ex:data-category="Objets")
+            let categoryName = btn.dataset.category
+            //console.log(`Bouton de la catégorie ${categoryName} clické.`)
+            let filteredData = filterDataByCateory(categoryName)
+            generateData(filteredData)
+        })
+    })
+
+    //*** Mise en commentaire du code refactorisé au dessus ***/
+    
+    // //Sélection du bouton Objets et ajout d'un addEventListener
+    // const btnObjets = document.querySelector(".objects")
+    // btnObjets.addEventListener("click", function () {
+    //     //console.log("clicked");
+    //     // Si designProjects.category existe dans l'API, vérifier si la propiété name === "Objets". 
+    //     const filteredObjects = data.filter(function (designProjects) {
+    //         return designProjects.category && designProjects.category.name === "Objets"
+    //     });
+
+    //     generateData(filteredObjects);
+    // });
+
+    //  //Sélection du bouton Appartements et ajout d'un addEventListener
+    //  const btnAppartements = document.querySelector(".flats");
+    //  btnAppartements.addEventListener("click", function () {
+    //      //console.log("clicked");
+    //      // Si designProjects.category existe dans l'API, vérifier si la propiété name === "Appartements". 
+    //      const filteredObjects = data.filter(function (designProjects) {
+    //          return designProjects.category && designProjects.category.name === "Appartements";
+    //      });
  
-         generateData(filteredObjects);
-     });   
+    //      generateData(filteredObjects);
+    //  });   
 
-      //Sélection du bouton Hotels & Restaurants et ajout d'un addEventListener
-      const btnHotels = document.querySelector(".hotels");
-      btnHotels.addEventListener("click", function () {
-          //console.log("clicked");
-          // Si designProjects.category existe dans l'API, vérifier si la propiété name === "Hotels & restaurants". 
-          const filteredObjects = data.filter(function (designProjects) {
-              return designProjects.category && designProjects.category.name === "Hotels & restaurants";
-          });
+    //   //Sélection du bouton Hotels & Restaurants et ajout d'un addEventListener
+    //   const btnHotels = document.querySelector(".hotels");
+    //   btnHotels.addEventListener("click", function () {
+    //       //console.log("clicked");
+    //       // Si designProjects.category existe dans l'API, vérifier si la propiété name === "Hotels & restaurants". 
+    //       const filteredObjects = data.filter(function (designProjects) {
+    //           return designProjects.category && designProjects.category.name === "Hotels & restaurants";
+    //       });
   
-          generateData(filteredObjects);
-      }); 
+    //       generateData(filteredObjects);
+    //   }); 
       
       //Sélection du bouton Tous et ajout d'un addEventListener
-      const btnAll = document.querySelector(".all");
-      btnAll.addEventListener("click", function () {
+       const btnAll = document.querySelector(".all");
+        btnAll.addEventListener("click", function () {
           //console.log("clicked");
           generateData(data);
-          }); 
-}
-fetchData();
-
-const loginLink = document.getElementById("link-login")
-loginLink.addEventListener("click", ()=>{
-    //console.log("clicked on login link")
-})
+           }); 

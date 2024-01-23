@@ -1,3 +1,5 @@
+import { handleEditionPage } from "./edition.js"
+
 //*** Gestion de la section login au sein du DOM ***/
 
 //Récupération de la section login  
@@ -10,8 +12,7 @@ const contactElement = document.getElementById("contact")
 
 // Créattion d'une fonction de regénéraion des élements de la page d'acceuil
 // quand la secion login est affichée à l'écran
-function generateHomePage()
-{
+export function generateHomePage(){
     introElement.style.display = "block"
     introElement.style.display = "flex"
     portfolioElement.style.display = "block"
@@ -19,8 +20,8 @@ function generateHomePage()
     loginSection.classList.remove('active')
 }
 
-//Récupération du lien login et création d'un addEventlistener
-const loginBtn = document.getElementById("link-login")
+//Récupération du bouton login et création d'un addEventlistener
+export const loginBtn = document.getElementById("link-login")
 loginBtn.addEventListener("click", ()=>{
     //console.log("clicked on login link")
 
@@ -49,38 +50,20 @@ loginBtn.addEventListener("click", ()=>{
 })
 
 // Génération d'un bouton logout
-const logoutBtn = document.createElement("li")
+export const logoutBtn = document.createElement("li")
 logoutBtn.innerText = "logout"
 const headerNavUl = document.querySelector(".header__nav--ul")
 loginBtn.insertAdjacentElement("afterend", logoutBtn)
 logoutBtn.style.display = "none"
+logoutBtn.addEventListener("click", ()=>{
+    window.localStorage.removeItem("token")
+    window.location.href = "/FrontEnd/index.html"
+    console.log("clicked")
+})
 
-function handleEditionPage(){
-    //Regénération de la page d'acceuil avec la fonction generateHomePage
-    generateHomePage()
+const modal = document.getElementById("modal")
+modal.style.visibility = "hidden"
 
-    // Génération de la marge comprenant le bouton d'édition en haut de page
-                    
-    const editButton = document.createElement("div")
-    editButton.classList.add("edit-section")
-
-    const header = document.querySelector("header")
-    header.insertAdjacentElement("beforebegin", editButton)
-
-    editButton.innerHTML = `<div class="edit-btn"><i class="fa-solid fa-pen-to-square"></i> Mode édition</div>`
-
-    loginBtn.style.display = "none"
-    logoutBtn.style.display = "block"
-
-
-    // Génération du bouton modifier
-    const modifyButton = document.createElement("div")
-
-    const titleProjects = document.querySelector(".projects-title")
-    titleProjects.appendChild(modifyButton)
-
-    modifyButton.innerHTML = `<div class="modify-btn"><i class="fa-solid fa-pen-to-square"></i> Modifier</div>`
-    }
 
 
 //*** Addeventlistener du fromulaire (SUBMIT) ***//
@@ -91,11 +74,11 @@ loginForm.addEventListener('submit', function (event) {
     //Empêche le recharchement de la page par défaut lors du clic sur le submit
     event.preventDefault()
 
-
+    // récupération des inputs du formulaire 
     let emailInput = document.getElementById("emailInput")
     let passwordInput = document.getElementById("passwordInput")
-    console.log("Email:", emailInput.value);
-    console.log("Password:", passwordInput.value)
+    //console.log("Email:", emailInput.value);
+    //console.log("Password:", passwordInput.value)
 
     async function userLogin(){
         const responseLogin = await fetch("http://localhost:5678/api/users/login", {
@@ -112,22 +95,22 @@ loginForm.addEventListener('submit', function (event) {
 
         if (responseLogin.ok) {
         const dataLogin = await responseLogin.json()
-        console.log(dataLogin)
+        //console.log(dataLogin)
         const connectedToken = dataLogin.token
             if(connectedToken){
             //Stocke le token dans le localstorage
             window.localStorage.setItem("token", connectedToken)
             console.log("token stocké dans le storage local")
 
+            // Foncion importée de edition.js qui se charge d'incorporer 
+            // sur la page les éléments d'édition suite au login
             handleEditionPage()
 
-
-                
-            }else {
+        }else {
             console.log("Token not received. Login failed.")
             }
         }else{
-            // Création d'une ID qui permettra,  une fois rattachée au erroMessage, 
+            // Création d'une ID qui permettra,  une fois rattachée au errorMessage, 
             // de vérifier si errorMessage existe pour ne pas le dupliquer au clic
             // sur le bouton submit
             const errorMessageId = "login-error-message";
@@ -149,11 +132,11 @@ loginForm.addEventListener('submit', function (event) {
     userLogin()
 })
 
-// Vérifie la présence du token dans le local storage avec getitem
+// Vérifie la présence du token dans le local storage avec getitem lors du rechargement de la page
 document.addEventListener("DOMContentLoaded", () => {
     const token = localStorage.getItem("token");
     if (token) {
-        // si token = true (présnce du token), la fonction handle login est implémenté
+        // si token = true (présence du token), la fonction handleEditionPage est implémentée
         handleEditionPage();
     }
 });
