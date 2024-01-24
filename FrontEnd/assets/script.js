@@ -3,12 +3,12 @@ import "./edition.js"
 
 
 // Récupération des données GET /works
-const response = await fetch("http://localhost:5678/api/works")
-const data = await response.json()
+export const response = await fetch("http://localhost:5678/api/works")
+export const data = await response.json()
     //console.log(data);
 
     //Génération des données sur la page web
-    function generateData(data) {
+  export function generateData(data) {
         //Selection du container gallery
         const gallery = document.querySelector(".gallery");
         //Empêche les doublons lorsque l'on clique sur un filtre
@@ -33,7 +33,7 @@ const data = await response.json()
         }
     }
     
-    generateData(data);
+    generateData(data)
 
     //1.Création d'une fonction pour filtrer les éléments par catégorie, ici avec le paramètre categoryName
     function filterDataByCateory(categoryName){
@@ -100,3 +100,33 @@ const data = await response.json()
           //console.log("clicked");
           generateData(data);
            }); 
+
+
+           function generateImagesInModal() {
+            for (let i = 0; i < data.length; i++) {
+              const designProjects = data[i];
+          
+              const eraserGallery = document.querySelector(".modal-gallery__eraser");
+          
+              const imageForModal = document.createElement("div"); // Use a container div
+              imageForModal.classList.add("image-container");
+          
+              const img = document.createElement("img");
+              img.src = designProjects.imageUrl;
+          
+              const eraserButton = document.createElement("i");
+              eraserButton.classList.add("fa-solid", "fa-trash-can");
+          
+              // Append img and eraserButton to the container div
+              imageForModal.appendChild(img);
+              imageForModal.appendChild(eraserButton);
+          
+              // Append the container div to the gallery
+              eraserGallery.appendChild(imageForModal);
+              img.insertAdjacentElement("afterend", eraserButton)
+                
+            }
+          }
+          
+          generateImagesInModal();
+          

@@ -1,6 +1,7 @@
 import { generateHomePage } from "./login.js"
 import { loginBtn } from "./login.js"
 import { logoutBtn } from "./login.js"
+import { data } from "./script.js"
 
 function hideModal(){
 modal.style.visibility = "hidden"
@@ -54,6 +55,11 @@ modal.addEventListener("click", (event)=>{
     hideModal()
     }
 })
+
+
+
+
+
 
 
 

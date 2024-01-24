@@ -174,7 +174,7 @@ nav li {
 	width: 198px;
 }
 
-.gallery {
+.gallery{
 	width: 100%;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
@@ -182,9 +182,38 @@ nav li {
 	grid-row-gap: 20px;
 }
 
-.gallery img {
+.modal-gallery__eraser{
 	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(5,1fr);
+	grid-template-rows: 100px;
+	grid-column-gap: 8px;
+	row-gap: 20px;
+	padding: 8px;
+	box-sizing: border-box;
+}
+.modal-gallery__eraser img + i{
+	position: absolute;
+	color: white;
+	font-size: 11px;
+	background: black;
+	width:17px;
+	height:17px;
+	border-radius: 2px;
+	padding:3px;
+	transform: translateX(-25px) translateY(7px);
+	box-sizing: border-box;
+	text-align: center;
+	
+}
+.gallery img{
+	width: 100%;
+	position: relative;
 
+}
+
+.modal-gallery__eraser img{
+	width: 100%;
 }
 
 #contact{
@@ -340,9 +369,9 @@ footer nav ul {
 	height: 515px;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	justify-content: space-between;
+	justify-content: space-evenly;
 	margin: auto;
+	gap: 5px;
 }
 
 .btn-container{
