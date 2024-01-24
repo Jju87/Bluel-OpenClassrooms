@@ -12,14 +12,14 @@
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
-	<script type="module" src="assets/script.js" defer></script>
+	<script type="module" src="./assets/script.js" defer></script>
 </head>
 <body>
 <header>
 	<a href=""><h1>Sophie Bluel <span>Architecte d'intérieur</span></h1></a>
 	<nav>
 		<ul class="header__nav--ul">
-			<li id="link-projects"><a class="nav-links" href="/FrontEnd/index.html#portfolio">projets</a></li>
+			<li id="link-projects"><a class="nav-links" href="#portfolio">projets</a></li>
 			<li id="link-contact"><a class="nav-links" href="#contact">contact</a></li>
 			<li id="link-login"><a class="nav-links"></a>login</li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
@@ -106,7 +106,7 @@
 		<p>Vous avez un projet ? Discutons-en !</p>
 		<form action="#" method="post">
 			<label for="name">Nom</label>
-			<input type="text" name="name" id="name">
+			<input class="input-style" type="text" name="name" id="name">
 			<label for="email">Email</label>
 			<input type="email" name="email" id="email">
 			<label for="message">Message</label>
@@ -126,20 +126,57 @@
 			<span class="forgotten">Mot de passe oublié</span>		
 		</form>
 	</section>
+	<!-- Ajout de la modal en HTML-->	 
 	<aside id="modal">
 		<div class="modal-wrapper">
 			<div class="xmark-container">
+				<i class="fa-solid fa-arrow-left"></i>
 				<i class="fa-solid fa-xmark"></i>
 			</div>
 			<section id="modal-gallery">
-				<h3 id="modal-title">Galerie photo</h3>
-				<div class="modal-gallery__eraser"></div>
-				<div class="btn-container">
+					<h3 id="modal-title">Galerie photo</h3>
+					<div class="modal-gallery__eraser">
+					</div>
+					<div class="btn-container">
 					<button class="access-to-add-images">Ajouter une photo</button>
+					</div>
+				<div id="confirmationModal" class="modal">
+					<div class="modal-content">
+					  <p>Effacer cet élément?</p>
+					  <button id="yesButton">Oui</button>
+					  <button id="noButton">Non</button>
+					</div>
+				</div>
+			</section>  
+			<section id="modal-send">
+				<h3 id="modal-title-add">Ajout photo</h3>
+				<div id="modal-send__form-container">
+					<form action="" id="modal-send-form">
+						<div class="modal-send-form__inputs">
+							<input type="file" id="image-upload" hidden>
+							<label for="image-upload" id="image-upload-label">
+								<div class="image-upload-label__container">
+									<i class="fa-regular fa-image"></i>
+									<span class="image-upload-label__container--btn">+ Ajouter une photo</span>
+									<span class="image-upload-label__container--text">jpg, png : 4mo max</span>
+							  	</div>
+							</label>
+							<label for="title" class="modal-send__form-container--title-label">Titre</label>
+							<input type="text" name="title" id="title" class="modal-send__form-container--title">
+							<label for="category" class="modal-send__form-container--category-label">Catégorie</label>
+							<select name="category" id="category" class="modal-send__form-container--category">
+								<option value="" selected disabled></option>
+								<option value="Objets">Objets</option>
+								<option value="Appartements">Appartements</option>
+								<option value="Hotels & restaurants">Hôtels & restaurants</option>
+							</select>
+						</div>
+						<div class="upload-btn-container">
+							<input id="submit-image-upload-btn" type="submit" value="Valider" disabled="disabled">
+						</div>
+					</form>
 				</div>
 			</section>
-
-
 		</div>
 	</aside>
 </main>

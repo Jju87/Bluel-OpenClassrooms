@@ -1,7 +1,6 @@
 import { handleEditionPage } from "./edition.js"
-
 //*** Gestion de la section login au sein du DOM ***/
-
+let token
 //Récupération de la section login  
 const loginSection = document.getElementById("login-section")
 
@@ -52,94 +51,86 @@ loginBtn.addEventListener("click", ()=>{
 // Génération d'un bouton logout
 export const logoutBtn = document.createElement("li")
 logoutBtn.innerText = "logout"
-const headerNavUl = document.querySelector(".header__nav--ul")
 loginBtn.insertAdjacentElement("afterend", logoutBtn)
 logoutBtn.style.display = "none"
 logoutBtn.addEventListener("click", ()=>{
     window.localStorage.removeItem("token")
-    window.location.href = "/FrontEnd/index.html"
+    window.location.href = "/index.html"
     console.log("clicked")
 })
 
 const modal = document.getElementById("modal")
 modal.style.visibility = "hidden"
 
+// récupération des inputs du formulaire 
+let emailInput = document.getElementById("emailInput")
+let passwordInput = document.getElementById("passwordInput")
+//console.log("Email:", emailInput.value);
+//console.log("Password:", passwordInput.value)
+
+export async function userLogin(){
+    const responseLogin = await fetch("http://localhost:5678/api/users/login", {
+    method: 'POST', 
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+    }, 
+    body: JSON.stringify({
+        email: emailInput.value,
+        password: passwordInput.value,
+    })
+    })
+
+    if (responseLogin.ok) {
+     const dataLogin = await responseLogin.json()
+    //console.log(dataLogin)
+     token = dataLogin.token
+        if(token){
+        //Stocke le token dans le localstorage
+        window.localStorage.setItem("token", token)
+        console.log("Token stored in localStorage:", token);
+
+
+        // Foncion importée de edition.js qui se charge d'incorporer 
+        // sur la page les éléments d'édition suite au login
+        handleEditionPage()
+
+    }else {
+        console.log("Token not received. Login failed.")
+        }
+    }else{
+        // Création d'une ID qui permettra,  une fois rattachée au errorMessage, 
+        // de vérifier si errorMessage existe pour ne pas le dupliquer au clic
+        // sur le bouton submit
+        const errorMessageId = "login-error-message";
+        const existingErrorMessage = document.getElementById(errorMessageId);
+        
+        if (!existingErrorMessage) {
+            const errorMessage = document.createElement("span");
+            errorMessage.innerHTML = "Vos identifiants sont incorrects.";
+            errorMessage.classList.add("error-msg");
+            errorMessage.id = errorMessageId;
+        
+            const loginTitle = document.querySelector(".login-title");
+            loginTitle.insertAdjacentElement("afterend", errorMessage);
+        }
+    }
+}
+
 
 
 //*** Addeventlistener du fromulaire (SUBMIT) ***//
 
 // AddEventlistener sur l'input submit (bouton 'envoyer') du formulaire 'login-form'
-let loginForm = document.getElementById('login-form')
+export let loginForm = document.getElementById('login-form')
 loginForm.addEventListener('submit', function (event) {
     //Empêche le recharchement de la page par défaut lors du clic sur le submit
     event.preventDefault()
 
-    // récupération des inputs du formulaire 
-    let emailInput = document.getElementById("emailInput")
-    let passwordInput = document.getElementById("passwordInput")
-    //console.log("Email:", emailInput.value);
-    //console.log("Password:", passwordInput.value)
-
-    async function userLogin(){
-        const responseLogin = await fetch("http://localhost:5678/api/users/login", {
-        method: 'POST', 
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        }, //J'oublie toujours la virgule ici!
-        body: JSON.stringify({
-            email: emailInput.value,
-            password: passwordInput.value,
-        })
-        })
-
-        if (responseLogin.ok) {
-        const dataLogin = await responseLogin.json()
-        //console.log(dataLogin)
-        const connectedToken = dataLogin.token
-            if(connectedToken){
-            //Stocke le token dans le localstorage
-            window.localStorage.setItem("token", connectedToken)
-            console.log("token stocké dans le storage local")
-
-            // Foncion importée de edition.js qui se charge d'incorporer 
-            // sur la page les éléments d'édition suite au login
-            handleEditionPage()
-
-        }else {
-            console.log("Token not received. Login failed.")
-            }
-        }else{
-            // Création d'une ID qui permettra,  une fois rattachée au errorMessage, 
-            // de vérifier si errorMessage existe pour ne pas le dupliquer au clic
-            // sur le bouton submit
-            const errorMessageId = "login-error-message";
-            const existingErrorMessage = document.getElementById(errorMessageId);
-            
-            if (!existingErrorMessage) {
-                const errorMessage = document.createElement("span");
-                errorMessage.innerHTML = "Vos identifiants sont incorrects.";
-                errorMessage.classList.add("error-msg");
-                errorMessage.id = errorMessageId;
-            
-                const loginTitle = document.querySelector(".login-title");
-                loginTitle.insertAdjacentElement("afterend", errorMessage);
-            }
-            
-        
-        }
-    }
     userLogin()
 })
+console.log("Script loaded and executing.");
 
-// Vérifie la présence du token dans le local storage avec getitem lors du rechargement de la page
-document.addEventListener("DOMContentLoaded", () => {
-    const token = localStorage.getItem("token");
-    if (token) {
-        // si token = true (présence du token), la fonction handleEditionPage est implémentée
-        handleEditionPage();
-    }
-});
 
 
 

@@ -1,60 +1,60 @@
 import "./login.js"
 import "./edition.js"
-
-
+import { handleEditionPage } from './edition.js';
+let token
 // Récupération des données GET /works
 export const response = await fetch("http://localhost:5678/api/works")
 export const data = await response.json()
     //console.log(data);
 
-    //Génération des données sur la page web
-  export function generateData(data) {
-        //Selection du container gallery
-        const gallery = document.querySelector(".gallery");
-        //Empêche les doublons lorsque l'on clique sur un filtre
-        gallery.innerHTML = ""
+//Génération des données sur la page web
+export function generateData(data) {
+    //Selection du container gallery
+    const gallery = document.querySelector(".gallery");
+    //Empêche les doublons lorsque l'on clique sur un filtre
+    gallery.innerHTML = ""
     
-        for (let i = 0; i < data.length; i++) {
-            const designProjects = data[i]
+    for (let i = 0; i < data.length; i++) {
+        const designProjects = data[i]
+
+        // Création d’un élément <article> qui comprendra l'image(imageUrl) et le nom(title)
+        const galleryCard = document.createElement("article")
+        gallery.appendChild(galleryCard)
     
-            // Création d’un élément <article> qui comprendra l'image(imageUrl) et le nom(title)
-            const galleryCard = document.createElement("article")
-            gallery.appendChild(galleryCard)
-    
-            // Ajout des images dans <article>
-            const imageFromDesignProjects = document.createElement("img")
-            imageFromDesignProjects.src = designProjects.imageUrl
-            galleryCard.appendChild(imageFromDesignProjects)
-    
-            // Ajout des titres dans <article>
-            const titleFromDesignProjects = document.createElement("h3")
-            titleFromDesignProjects.innerText = designProjects.title
-            galleryCard.appendChild(titleFromDesignProjects)
-        }
+        // Ajout des images dans <article>
+        const imageFromDesignProjects = document.createElement("img")
+        imageFromDesignProjects.src = designProjects.imageUrl
+        galleryCard.appendChild(imageFromDesignProjects)
+
+        // Ajout des titres dans <article>
+        const titleFromDesignProjects = document.createElement("h3")
+        titleFromDesignProjects.innerText = designProjects.title
+        galleryCard.appendChild(titleFromDesignProjects)
     }
+}
     
-    generateData(data)
+generateData(data)
 
-    //1.Création d'une fonction pour filtrer les éléments par catégorie, ici avec le paramètre categoryName
-    function filterDataByCateory(categoryName){
-        return data.filter(function (designProjects){
-            return designProjects.category && designProjects.category.name === categoryName
-        })
-    }
-
-    // Récupération de tous les boutons de filtres avec selectorALL
-    const filterButtons = document.querySelectorAll(".filters__btn")
-
-    //Pour chaque bouton de filterButtons au click...
-    filterButtons.forEach( btn =>{
-        btn.addEventListener("click", ()=>{
-            // la variable categoryName récupère le data.category qui a été rajouté au html (ex:data-category="Objets")
-            let categoryName = btn.dataset.category
-            //console.log(`Bouton de la catégorie ${categoryName} clické.`)
-            let filteredData = filterDataByCateory(categoryName)
-            generateData(filteredData)
-        })
+//1.Création d'une fonction pour filtrer les éléments par catégorie, ici avec le paramètre categoryName
+function filterDataByCateory(categoryName){
+    return data.filter(function (designProjects){
+        return designProjects.category && designProjects.category.name === categoryName
     })
+}
+
+// Récupération de tous les boutons de filtres avec selectorALL
+const filterButtons = document.querySelectorAll(".filters__btn")
+
+//Pour chaque bouton de filterButtons au click...
+filterButtons.forEach( btn =>{
+    btn.addEventListener("click", ()=>{
+        // la variable categoryName récupère le data.category qui a été rajouté au html (ex:data-category="Objets")
+        let categoryName = btn.dataset.category
+        //console.log(`Bouton de la catégorie ${categoryName} clické.`)
+        let filteredData = filterDataByCateory(categoryName)
+        generateData(filteredData)
+    })
+})
 
     //*** Mise en commentaire du code refactorisé au dessus ***/
     
@@ -94,39 +94,22 @@ export const data = await response.json()
     //       generateData(filteredObjects);
     //   }); 
       
-      //Sélection du bouton Tous et ajout d'un addEventListener
-       const btnAll = document.querySelector(".all");
-        btnAll.addEventListener("click", function () {
+//Sélection du bouton Tous et ajout d'un addEventListener
+const btnAll = document.querySelector(".all");
+    btnAll.addEventListener("click", function () {
           //console.log("clicked");
           generateData(data);
            }); 
 
+//
 
-           function generateImagesInModal() {
-            for (let i = 0; i < data.length; i++) {
-              const designProjects = data[i];
-          
-              const eraserGallery = document.querySelector(".modal-gallery__eraser");
-          
-              const imageForModal = document.createElement("div"); // Use a container div
-              imageForModal.classList.add("image-container");
-          
-              const img = document.createElement("img");
-              img.src = designProjects.imageUrl;
-          
-              const eraserButton = document.createElement("i");
-              eraserButton.classList.add("fa-solid", "fa-trash-can");
-          
-              // Append img and eraserButton to the container div
-              imageForModal.appendChild(img);
-              imageForModal.appendChild(eraserButton);
-          
-              // Append the container div to the gallery
-              eraserGallery.appendChild(imageForModal);
-              img.insertAdjacentElement("afterend", eraserButton)
-                
-            }
-          }
-          
-          generateImagesInModal();
-          
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOMContentLoaded event:', event);
+
+    let tokenRetrieve = localStorage.getItem('token', token);
+    if (tokenRetrieve) {
+      handleEditionPage();
+    }
+  });
+
