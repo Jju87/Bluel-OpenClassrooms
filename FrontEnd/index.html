@@ -142,19 +142,25 @@
 					</div>
 				<div id="confirmationModal" class="modal">
 					<div class="modal-content">
-					  <p>Effacer cet élément?</p>
+					  <p>Effacer ce projet?</p>
 					  <button id="yesButton">Oui</button>
 					  <button id="noButton">Non</button>
+					</div>
+				</div>
+				<div class="img-added-confirmation">
+					<div class="img-added-confirmation__content">
+					  <p>Projet ajouté avec succès!</p>
+					  <i class="fa-regular fa-file-image"></i>
 					</div>
 				</div>
 			</section>  
 			<section id="modal-send">
 				<h3 id="modal-title-add">Ajout photo</h3>
 				<div id="modal-send__form-container">
-					<form action="" id="modal-send-form">
+					<form enctype="multipart/form-data" method="post" id="modal-send-form">
 						<div class="modal-send-form__inputs">
-							<input type="file" id="image-upload" hidden>
-							<label for="image-upload" id="image-upload-label">
+							<input type="file" id="image-upload-input-file" name="image" hidden>
+							<label for="image-upload-input-file" id="image-upload-label">
 								<div class="image-upload-label__container">
 									<i class="fa-regular fa-image"></i>
 									<span class="image-upload-label__container--btn">+ Ajouter une photo</span>
@@ -162,9 +168,9 @@
 							  	</div>
 							</label>
 							<label for="title" class="modal-send__form-container--title-label">Titre</label>
-							<input type="text" name="title" id="title" class="modal-send__form-container--title">
+							<input type="text" name="title" id="image-upload-input-title" class="modal-send__form-container--title">
 							<label for="category" class="modal-send__form-container--category-label">Catégorie</label>
-							<select name="category" id="category" class="modal-send__form-container--category">
+							<select name="category" id="image-upload-input-category" class="modal-send__form-container--category">
 								<option value="" selected disabled></option>
 								<option value="Objets">Objets</option>
 								<option value="Appartements">Appartements</option>

@@ -1,19 +1,20 @@
 import "./login.js"
 import "./edition.js"
 import { handleEditionPage } from './edition.js';
+import { generateHomePage } from "./login.js";
 let token
 // Récupération des données GET /works
 export const response = await fetch("http://localhost:5678/api/works")
 export const data = await response.json()
     //console.log(data);
 
-//Génération des données sur la page web
+//Génération des données sur la page web avec la fonction generateData
 export function generateData(data) {
     //Selection du container gallery
     const gallery = document.querySelector(".gallery");
     //Empêche les doublons lorsque l'on clique sur un filtre
     gallery.innerHTML = ""
-    
+    // Création d'une boucle pour récupérer les données de l'API
     for (let i = 0; i < data.length; i++) {
         const designProjects = data[i]
 
@@ -35,7 +36,7 @@ export function generateData(data) {
     
 generateData(data)
 
-//1.Création d'une fonction pour filtrer les éléments par catégorie, ici avec le paramètre categoryName
+//Fonction qui filtre les données par catégorie
 function filterDataByCateory(categoryName){
     return data.filter(function (designProjects){
         return designProjects.category && designProjects.category.name === categoryName
@@ -48,10 +49,11 @@ const filterButtons = document.querySelectorAll(".filters__btn")
 //Pour chaque bouton de filterButtons au click...
 filterButtons.forEach( btn =>{
     btn.addEventListener("click", ()=>{
-        // la variable categoryName récupère le data.category qui a été rajouté au html (ex:data-category="Objets")
+        // la variable categoryName récupère le data.category qui a été rajouté au html (exemple:data-category="Objets")
         let categoryName = btn.dataset.category
         //console.log(`Bouton de la catégorie ${categoryName} clické.`)
         let filteredData = filterDataByCateory(categoryName)
+        // Affiche les données filtrées par catégorie
         generateData(filteredData)
     })
 })
@@ -104,12 +106,4 @@ const btnAll = document.querySelector(".all");
 //
 
 
-document.addEventListener('DOMContentLoaded', (event) => {
-    console.log('DOMContentLoaded event:', event);
-
-    let tokenRetrieve = localStorage.getItem('token', token);
-    if (tokenRetrieve) {
-      handleEditionPage();
-    }
-  });
 

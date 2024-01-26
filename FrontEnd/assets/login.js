@@ -1,6 +1,10 @@
 import { handleEditionPage } from "./edition.js"
+
 //*** Gestion de la section login au sein du DOM ***/
+
+//Création d'une variable pour stocker le token
 let token
+
 //Récupération de la section login  
 const loginSection = document.getElementById("login-section")
 
@@ -59,6 +63,7 @@ logoutBtn.addEventListener("click", ()=>{
     console.log("clicked")
 })
 
+// Récupération de l'élément modal et ajout d'un style pour le cacher
 const modal = document.getElementById("modal")
 modal.style.visibility = "hidden"
 
@@ -68,6 +73,11 @@ let passwordInput = document.getElementById("passwordInput")
 //console.log("Email:", emailInput.value);
 //console.log("Password:", passwordInput.value)
 
+
+//********* Fonction userLogin *************/
+
+
+// Fonction qui permet de récupérer le token de l'utilisateur et de le stocker dans le localstorage
 export async function userLogin(){
     const responseLogin = await fetch("http://localhost:5678/api/users/login", {
     method: 'POST', 
@@ -105,12 +115,16 @@ export async function userLogin(){
         const errorMessageId = "login-error-message";
         const existingErrorMessage = document.getElementById(errorMessageId);
         
+        // Si l'erreur n'existe pas, on la crée et on l'insère dans le DOM
         if (!existingErrorMessage) {
+
+            // Création du message d'erreur
             const errorMessage = document.createElement("span");
             errorMessage.innerHTML = "Vos identifiants sont incorrects.";
             errorMessage.classList.add("error-msg");
             errorMessage.id = errorMessageId;
-        
+            
+            // Insertion du message d'erreur dans le DOM
             const loginTitle = document.querySelector(".login-title");
             loginTitle.insertAdjacentElement("afterend", errorMessage);
         }
@@ -126,11 +140,20 @@ export let loginForm = document.getElementById('login-form')
 loginForm.addEventListener('submit', function (event) {
     //Empêche le recharchement de la page par défaut lors du clic sur le submit
     event.preventDefault()
-
     userLogin()
 })
-console.log("Script loaded and executing.");
 
+console.log("Script loaded and executing.");
+window.onload = function() {
+    console.log('window.onload event');
+    let tokenRetrieve = localStorage.getItem('token');
+    if (tokenRetrieve) {
+      isLoggedIn = true;
+      handleEditionPage();
+    } else {
+      generateHomePage();
+    }
+  };
 
 
 
