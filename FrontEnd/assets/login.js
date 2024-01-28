@@ -51,7 +51,7 @@ loginBtn.addEventListener("click", () => {
     //(disparition de la section login et réapparition des sections Intro, Projets, Contacts)
     const linkProjects = document.getElementById("link-projects")
     linkProjects.addEventListener("click", () => {
-        generateHomePage
+        generateHomePage()
     })
 })
 
