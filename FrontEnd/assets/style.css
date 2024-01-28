@@ -252,6 +252,10 @@ nav li {
 	padding: 15px;
 }
 
+#modal-send-form .modal-send__form-container--category{
+	border-right: 30px solid white;
+}
+
 #contact label, #login-section label{
 	margin: 2em 0 1em 0;
 }
@@ -444,14 +448,14 @@ footer nav ul {
 }
 .img-added-confirmation__content{
 	background-color: #fefefe;
-	padding: 20px;
-	width: 55%; 
+	padding: 30px;
+	width: 60%; 
 	height: 15%;
 	display: flex;
 	justify-content: center;
 	align-items: center;  
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.8);
-	border-radius: 30px;
+	border-radius: 20px;
 	background-color: #1D6154;
 }
 .img-added-confirmation__content p{
@@ -511,8 +515,6 @@ footer nav ul {
 	justify-content: space-evenly;
 	box-sizing: border-box;
 }
-
-
 
 .image-upload-label__container{
 	margin-top: 20px;
