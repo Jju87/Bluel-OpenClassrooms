@@ -31,6 +31,13 @@ footer, header, hgroup, menu, nav, section {
 body {
 	line-height: 1;
 }
+main {
+	margin: 90px;
+}
+a{
+	text-decoration: none;
+	color: black
+}
 ol, ul {
 	list-style: none;
 }
@@ -56,7 +63,7 @@ body {
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	margin: 50px 0;
 }
 section {
 	margin: 50px 0
@@ -75,7 +82,6 @@ h1 > span {
 	font-family: 'Work Sans';
 	font-size:10px;
 	letter-spacing: 0.1em;
-;
 }
 
 h2{
@@ -95,8 +101,9 @@ nav li {
 	font-size: 1.2em;
 }
 
-li:hover {
+.nav-links:hover, li:hover {
 	color: #B1663C;
+	cursor: pointer;
 }
 #introduction {
 	display: flex;
@@ -121,11 +128,53 @@ li:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
+
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
 }
-.gallery {
+
+/*Ajout des filtres en CSS*/
+.filters{
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+}
+
+.filters__btn{
+	color: #1D6154;
+	text-align: center;
+	font-family: Syne;
+	font-size: 16px;
+	font-weight: 700;
+	border-radius: 60px;
+	border: 1px solid #1D6154;
+	height: 37px;
+	flex-shrink: 1;
+	box-sizing: border-box;
+}
+
+.filters__btn:focus{
+	color: white;
+	background-color: #1D6154;
+}
+.all{
+	width: 100px;
+}
+
+.objects{
+	width: 100px;
+}
+
+.flats{
+	width: 157px;
+}
+
+.hotels{
+	width: 198px;
+}
+
+.gallery{
 	width: 100%;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
@@ -133,35 +182,81 @@ li:hover {
 	grid-row-gap: 20px;
 }
 
-.gallery img {
+.modal-gallery__eraser{
 	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(5,1fr);
+	grid-template-rows: 100px;
+	grid-column-gap: 8px;
+	row-gap: 20px;
+	padding: 8px;
+	box-sizing: border-box;
+}
+.modal-gallery__eraser img + i{
+	position: absolute;
+	color: white;
+	font-size: 11px;
+	background: black;
+	width:17px;
+	height:17px;
+	border-radius: 2px;
+	padding:3px;
+	transform: translateX(-25px) translateY(7px);
+	box-sizing: border-box;
+	text-align: center;
+	cursor: pointer;
+}
+.gallery img{
+	width: 100%;
+	position: relative;
 
 }
-#contact {
-	width: 50%;
-margin: auto;
+.modal-gallery__eraser img{
+	width: 100%;
 }
-#contact > * {
+
+#contact{
+	width: 50%;
+	margin: auto;
+}
+#contact > * , #login-section > *{
 	text-align: center;
 
 }
-#contact h2{
+#contact h2, #login-section h2{
 	margin-bottom: 20px;
 }
-#contact form {
+#contact form, #login-section form{
 	text-align: left;
 	margin-top:30px;
 	display: flex;
 	flex-direction: column;
 }
 
-#contact input {
+#contact input, #login-section input, #modal-send-form select{
 	height: 50px;
-	font-size: 1.2em;
+	font-size: 1.1em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	font-family: "Work Sans";
+	box-sizing: border-box;
 }
-#contact label {
+
+#modal-send-form .modal-send__form-container--title, #modal-send-form .modal-send__form-container--category, #modal-send-form .modal-send__form-container--description{
+	height: 50px;
+	font-size: 1.1em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	font-family: "Work Sans";
+	box-sizing: border-box;
+	padding: 15px;
+}
+
+#modal-send-form .modal-send__form-container--category{
+	border-right: 30px solid white;
+}
+
+#contact label, #login-section label{
 	margin: 2em 0 1em 0;
 }
 #contact textarea {
@@ -180,9 +275,313 @@ input[type="submit"]{
 	border-radius: 60px ;
 }
 
+.forgotten{
+	text-align: center;
+	text-decoration: underline;
+}
+
+#login-section{
+	transform: scale(0);
+	visibility: hidden;
+	transition: 300ms ease-out;
+	width:50%;
+	margin:auto;
+	margin-bottom: 300px;
+	position: absolute;
+}
+
+#login-section.active {
+	visibility: visible;
+	transform: scale(1);
+	transition: 300ms ease-out;
+	position: relative;
+  }
+
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
 	margin: 2em
 }
 
+.error-msg{
+	display: block;
+	color: red;
+}
+
+/*** connected user page ***/
+
+.edit-section{
+	background-color: black;
+	height: 60px;
+	width: 100vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-left: calc(-1 * ((100vw - 100%) / 2));
+	
+}
+
+.edit-msg{
+	color: white;
+}
+.projects-title{
+	position: relative;
+	width: 500px;
+	margin: auto;
+}
+
+.modify-btn{
+	color: black;
+	position: absolute;
+	top: 10px;
+	left: 370px;
+	cursor: pointer;
+
+}
+
+#modal{
+	position: fixed;
+	top:0;
+	left:0;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.7);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: 200ms ease-in;
+	transform: scale(0);
+	opacity: 0;
+}
+
+.modal-wrapper{
+	height: 530px;
+	width: 588px;
+	background-color: white;
+	border-radius: 10px;
+	padding: 20px;
+
+}
+
+.xmark-container{
+	display: flex;
+	justify-content: space-between;
+
+	
+}
+.xmark-container .fa-xmark{
+	cursor: pointer;
+	font-size: 24px;
+	padding: 5px;
+}
+
+.xmark-container .fa-arrow-left{
+	cursor: pointer;
+	font-size: 24px;
+	padding: 5px;
+	opacity: 0;
+}
+
+#modal-title, #modal-title-add{
+	text-align: center;
+	font-size: 26px;
+}
+
+#modal-gallery{
+	width: 420px;
+	height: 515px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	margin: auto;
+	gap: 5px;
+	opacity: 1;
+	transform: scale(1);
+}
+
+.btn-container, .upload-btn-container{
+	border-top: 1px solid #B3B3B3;
+	width: 100%;
+	height: 90px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.btn-container button{
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+	margin : 2em auto ;
+	width: 235px;
+	text-align: center;
+	border-radius: 60px ;
+	border: none;
+	height: 35px;
+	cursor: pointer;
+}
+
+.modal, .img-added-confirmation{
+	display: none;
+	position: fixed; 
+	justify-content: center;
+	align-items: center;
+	left: 0;
+	top: 0;
+	width: 100%; 
+	height: 100%; 
+	overflow: auto; 
+	background-color: rgba(0,0,0,0.0); 
+  }
+  
+  .modal-content{
+	background-color: #fefefe;
+	margin: 15% auto; /* 15% from the top and centered */
+	padding: 20px;
+	width: 80%; 
+	height: 30%;
+	display: flex;
+	align-items: center; 
+	justify-content: space-evenly; 
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.8);
+}
+.img-added-confirmation__content{
+	background-color: #fefefe;
+	padding: 30px;
+	width: 60%; 
+	height: 15%;
+	display: flex;
+	justify-content: center;
+	align-items: center;  
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.8);
+	border-radius: 20px;
+	background-color: #1D6154;
+}
+.img-added-confirmation__content p{
+	font-family: 'Syne';
+	font-weight: 700;
+	font-size: 18px;
+	text-align: center;
+	color: white;
+}
+
+.img-added-confirmation__content .fa-file-image{
+	font-weight: 700;
+	font-size: 30px;
+	color: white;
+}
+
+.modal-content button{
+	font-family: 'Syne';
+	font-weight: 400;
+	color: white;
+	background-color: #1D6154;
+	width: 20%;
+	text-align: center;
+	border-radius: 30px;
+	border: none;
+	height: 30px;
+	cursor: pointer;
+}
+
+#modal-send{
+	visibility: hidden;
+	opacity: 0;
+	transform: scale(0);
+	width: 420px;
+	height: 515px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	margin: auto;
+	margin-top: 3px;
+	gap: 5px;
+}
+
+#modal-send-form{
+	display: flex;
+	flex-direction: column;
+	padding-bottom: 10px;
+	height: 473px;
+	justify-content: space-between;
+}
+
+.modal-send-form__inputs{
+	height: 320px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	justify-content: space-evenly;
+	box-sizing: border-box;
+}
+
+.image-upload-label__container{
+	margin-top: 20px;
+	width: 420px;
+	height: 130px;
+	flex-shrink: 0;
+	border-radius: 3px;
+	background: #E8F1F6;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	justify-content: space-evenly;
+	align-items: center;
+	position: relative;
+}
+
+.image-upload-label__container i{
+	color: #B3B3B3;
+	font-size: 45px;
+}
+.image-upload-label__container .image-upload-label__container--btn{
+	width: 160px;
+	height: 30px;
+	flex-shrink: 0;
+	border-radius: 50px;
+	background: #CBD6DC;
+	color: #306685;
+	text-align: center;
+	font-family: "Work Sans";
+	font-size: 13px;
+	font-weight: 500;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.image-upload-label__container .image-upload-label__container--text{
+	color: #444;
+	text-align: center;
+	font-family: "Work Sans";
+	font-size: 10px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+}
+.modal-send__form-container--title-label, .modal-send__form-container--category-label{
+	margin: 1.3em 0 0.7em 0;
+}
+
+.upload-btn-container #submit-image-upload-btn{
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	margin : 2em auto ;
+	width: 235px;
+	text-align: center;
+	border-radius: 60px ;
+	border: none;
+	height: 35px;
+	cursor: not-allowed;
+	border-radius: 60px;
+	background-color: #A7A7A7;
+}
+
+.style-for-image-preview{
+	width: 95px;
+	height: 130px;
+	position: absolute;
+	object-fit: cover;
+}
